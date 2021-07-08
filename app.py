@@ -14,7 +14,6 @@ app.secret_key = "chave secreta Dudom"
 
 db = SQLAlchemy(app)
 
-
 class Generos(db.Model):
     __tablename__ = "generos"
 
@@ -36,7 +35,6 @@ class Generos(db.Model):
     def generos_nome(genero_nome):
         return Generos.query.filter(Generos.genero == genero_nome).first()
 
-
 class Animes(db.Model):
     __tablename__ = "animes"
 
@@ -45,8 +43,7 @@ class Animes(db.Model):
     imagem_url = db.Column(db.String(255), nullable=False)
     trailer = db.Column(db.String(255), nullable=True)
     sinopse = db.Column(db.String(1750), nullable=True)
-    idgeneros = db.Column(db.Integer, db.ForeignKey(
-        'generos.id'), nullable=False)
+    idgeneros = db.Column(db.Integer, db.ForeignKey('generos.id'), nullable=False)
     generos = db.relationship('Generos', foreign_keys='Animes.idgeneros')
 
     def __init__(self, nome, imagem_url, trailer, sinopse, idgeneros):
@@ -80,8 +77,7 @@ class Animes(db.Model):
 
     @staticmethod
     def read_single(id_registro):
-        animes_generos = Animes.query.join(Generos).filter(
-            Animes.id == id_registro).first()
+        animes_generos = Animes.query.join(Generos).filter(Animes.id == id_registro).first()
         db.session.close_all()
         return animes_generos.query.get(id_registro)
 
@@ -90,13 +86,11 @@ class Animes(db.Model):
         db.session.close_all()
         return Animes.query.count()
 
-
 @app.route("/")
 def index():
     total = Animes.query.count()
     db.session.close_all()
     return render_template("index.html", total=total)
-
 
 @app.route("/read")
 def read_all():
@@ -106,12 +100,10 @@ def read_all():
 
 @app.route("/read/<id_registro>")
 def read_id(id_registro):
-    anime_genero = Generos.query.join(Animes, Generos.id == Animes.idgeneros).add_columns(Animes.id, Animes.nome, Animes.imagem_url,
-                                                                                          Animes.trailer, Animes.sinopse, Animes.idgeneros, Generos.id, Generos.genero).filter(Animes.id == id_registro).first()
+    anime_genero = Generos.query.join(Animes, Generos.id == Animes.idgeneros).add_columns(Animes.id, Animes.nome, Animes.imagem_url,Animes.trailer, Animes.sinopse, Animes.idgeneros, Generos.id, Generos.genero).filter(Animes.id == id_registro).first()
     anime_velho = Animes.read_single(id_registro)
     db.session.close_all()
     return render_template("read_single.html", anime_genero=anime_genero, anime_velho=anime_velho)
-
 
 @app.route("/create", methods=('GET', 'POST'))
 def create():
@@ -124,15 +116,13 @@ def create():
 
         registro_genero = Generos.generos_nome(form['genero'])
 
-        registro = Animes(form['nome'], form['imagem_url'],
-                          form['trailer'], form['sinopse'], registro_genero.id)
+        registro = Animes(form['nome'], form['imagem_url'], form['trailer'], form['sinopse'], registro_genero.id)
         registro.save()
 
         novo_id = registro.id
 
     db.session.close_all()
     return render_template("create.html", anime_genero=anime_genero, novo_id=novo_id)
-
 
 @app.route('/update/<id_registro>', methods=('GET', 'POST'))
 def update(id_registro):
@@ -147,20 +137,17 @@ def update(id_registro):
 
         registro_genero = Generos.generos_nome(form['genero'])
 
-        anime_velho.update(form['nome'], form['imagem_url'], registro_genero.id,
-                            form['trailer'], form['sinopse'])
+        anime_velho.update(form['nome'], form['imagem_url'], registro_genero.id, form['trailer'], form['sinopse'])
 
         sucesso = True
 
     db.session.close_all()
     return render_template('update.html', anime_genero=anime_genero, anime_velho=anime_velho, sucesso=sucesso)
 
-
 @app.route('/delete/<id_registro>')
 def delete(id_registro):
     registro = Animes.read_single(id_registro)
     return render_template("delete.html", registro=registro)
-
 
 @app.route('/delete/<id_registro>/confirmed')
 def delete_confirmed(id_registro):
@@ -175,7 +162,5 @@ def delete_confirmed(id_registro):
     db.session.close_all()
     return render_template("delete.html", registro=registro, sucesso=sucesso)
 
-
 if (__name__ == "__main__"):
     app.run(debug=True)
-

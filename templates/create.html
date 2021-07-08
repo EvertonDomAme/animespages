@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animes DOM</title>
     <link rel="stylesheet" href="/static/style.css">
+
 </head>
     <body background='/static/img/fundaum.gif'>
-        
+
         <div id="slider">
-            <img  src="/static/img/fundohdr1.gif" width="1000" height="300" alt="">
+            <img  src="/static/img/fundohdr1.gif" width="900" height="300" alt="">
             <img  src="/static/img/fundohdr2.gif" alt="">
             <img  src="/static/img/fundohdr3.gif" alt="">
             <img  src="/static/img/fundohdr4.gif" alt="">
@@ -20,12 +21,11 @@
         <script type="text/javascript" src="/static/slider.js"></script>
 
         <div class="cx_create">
+                    
             <div class="bloco">
                 <h3> ADICIONAR CONTEÚDO </h3>
             </div>
-        
         {% if not novo_id %}
-        
             <div class="bloco">
                 <form class="form" method="POST">
                     <div class="bloco form_input">
@@ -68,7 +68,6 @@
                 <a href="/read/{{ novo_id }}" class="botao">Visualizar registro</a>
             </p>	
         </div>
-
         {% endif %}
     </body>
 </html>

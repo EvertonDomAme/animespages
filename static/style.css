@@ -1,34 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 body {
+    display: flex;
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     font-family: "Montserrat", sans-serif;
     margin:100px 230px;
+    flex-direction: column;
 }
-
-
-
-#slider{
-    width:100%;
-    height: 200px;
-    position: relative;
-    padding: 0;
-    margin: 0px 0px;
-}
-#slider img{
-    opacity: 0;
-    position: absolute;
-    width: 100%;
-    height: 130%;
-    object-fit: auto;
-    transition: opacity 1000ms;
-    border-radius: 15px;
-}
-#slider img.selected{
-    opacity: 1;
-}
-
 
 
 .apresentacao{
@@ -217,6 +196,28 @@ a{
     margin: 10px 40px 10px 40px;
     border-radius: 15px;
 }
+#slider{
+    width:100%;
+    height: 200px;
+    position: relative;
+    padding: 0;
+    margin: 0px 0px;
+}
+#slider img{
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 130%;
+    object-fit: auto;
+    transition: opacity 1000ms;
+    border-radius: 15px;
+}
+#slider img.selected{
+    opacity: 1;
+}
+
+
+
 .cx_update{
     background-color: rgba(56, 56, 56, 0.623);
     padding: 50px 50px 50px 50px;
